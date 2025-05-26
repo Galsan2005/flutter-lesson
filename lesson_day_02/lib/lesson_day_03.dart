@@ -207,6 +207,7 @@ void main(){
 
   print("=====================");
   print("=====================");
+  print("")
   print('======exercise 1=======');
   int totalPurchase = 85000;
   bool isMember = true;
