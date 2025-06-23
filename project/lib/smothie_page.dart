@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/detailCard.dart';
 import 'package:project/donut_page.dart';
 import 'package:project/start.dart';
 
@@ -190,76 +191,82 @@ class _SmothiePageState extends State<SmothiePage> {
                       ],
                     )),
                 Padding(padding: EdgeInsets.only(left: 16)),
-                Container(
-                    width: 160,
-                    height: 231,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffFFD6D6),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 58,
-                                height: 37,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffFFC4C4),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 0),
-                                      child: Text(
-                                        "\$45",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Nunito",
-                                            color: Color(0xffFA8585)),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Detailcard(productName: "Strawberry", price: "\$12.75", detail: "A smoothie commonly has a liquid base,such as fruit juice or milk, yogurt or ice cream. ", img: "assets/images/Frame 6.png", delivery: "delievery not included", cart: "Add to Cart",)));
+                  },
+                  child: Container(
+                      width: 160,
+                      height: 231,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffFFD6D6),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 58,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xffFFC4C4),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 0),
+                                        child: Text(
+                                          "\$45",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: "Nunito",
+                                              color: Color(0xffFA8585)),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ]),
-                        Padding(padding: EdgeInsets.only(top: 6)),
-                        Container(
-                          child: Image.asset("assets/images/Frame 6.png"),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 10)),
-                        Text(
-                          "Strawberry",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black,
+                              ]),
+                          Padding(padding: EdgeInsets.only(top: 6)),
+                          Container(
+                            child: Image.asset("assets/images/Frame 6.png"),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(left: 15, right: 15, top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child:
-                                    Image.asset("assets/images/Frame 10.png"),
-                                width: 18,
-                                height: 18,
-                              ),
-                              Icon(Icons.add)
-                            ],
+                          Padding(padding: EdgeInsets.only(top: 10)),
+                          Text(
+                            "Strawberry",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
-                    ))
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 15, right: 15, top: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child:
+                                      Image.asset("assets/images/Frame 10.png"),
+                                  width: 18,
+                                  height: 18,
+                                ),
+                                Icon(Icons.add)
+                              ],
+                            ),
+                          ),
+                        ],
+                      )),
+                )
               ],
             ),
             Padding(padding: EdgeInsets.only(top: 16)),

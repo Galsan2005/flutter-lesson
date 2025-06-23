@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project/detailCard.dart';
 import 'package:project/smothie_page.dart';
 import 'package:project/start.dart';
 
@@ -62,12 +63,12 @@ class _DonutPageState extends State<DonutPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 160,
-                  height: 53,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
+                    width: 160,
+                    height: 53,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -90,8 +91,7 @@ class _DonutPageState extends State<DonutPage> {
                           ),
                         ],
                       ),
-                    )
-                ),
+                    )),
                 Padding(padding: EdgeInsets.only(left: 16)),
                 Container(
                   width: 160,
@@ -121,75 +121,93 @@ class _DonutPageState extends State<DonutPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                    width: 160,
-                    height: 231,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xffcae1ff),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 58,
-                                height: 37,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xffa3c9fc),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: 0),
-                                      child: Text(
-                                        "\$36",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "Nunito",
-                                            color: Color(0xff2884ff)),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Detailcard(
+                                  productName: "Ice Cream Dunkings",
+                                  price: "2 items | \$45",
+                                  detail:
+                                      "Doughnuts are usually deep fried from a flour dough, but other types of batters can also be used. ",
+                                  img: "assets/images/donut (7).png",
+                                  delivery: "Delievery Changes Included",
+                                  cart: "Viev Cart",
+                                )));
+                  },
+                  child: Container(
+                      width: 160,
+                      height: 231,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0xffcae1ff),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 58,
+                                  height: 37,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xffa3c9fc),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 0),
+                                        child: Text(
+                                          "\$36",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: "Nunito",
+                                              color: Color(0xff2884ff)),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ]),
-                        Padding(padding: EdgeInsets.only(top: 0)),
-                        Container(
-                          child: Image.asset("assets/images/donut (7).png"),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 0)),
-                        Text(
-                          "Ice Cream Dunkings",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "Nunito",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black,
+                              ]),
+                          Padding(padding: EdgeInsets.only(top: 0)),
+                          Container(
+                            child: Image.asset("assets/images/donut (7).png"),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child:
-                                Image.asset("assets/images/Frame 10.png"),
-                                width: 18,
-                                height: 18,
-                              ),
-                              Icon(Icons.add)
-                            ],
+                          Padding(padding: EdgeInsets.only(top: 0)),
+                          Text(
+                            "Ice Cream Dunkings",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: "Nunito",
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
-                    )),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 15, right: 15, top: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child:
+                                      Image.asset("assets/images/Frame 10.png"),
+                                  width: 18,
+                                  height: 18,
+                                ),
+                                Icon(Icons.add)
+                              ],
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
                 Padding(padding: EdgeInsets.only(left: 16)),
                 Container(
                     width: 160,
@@ -244,13 +262,14 @@ class _DonutPageState extends State<DonutPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15, top: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 child:
-                                Image.asset("assets/images/Frame 10.png"),
+                                    Image.asset("assets/images/Frame 10.png"),
                                 width: 18,
                                 height: 18,
                               ),
@@ -319,13 +338,14 @@ class _DonutPageState extends State<DonutPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15, top: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 child:
-                                Image.asset("assets/images/Frame 10.png"),
+                                    Image.asset("assets/images/Frame 10.png"),
                                 width: 18,
                                 height: 18,
                               ),
@@ -389,13 +409,14 @@ class _DonutPageState extends State<DonutPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15, top: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 child:
-                                Image.asset("assets/images/Frame 10.png"),
+                                    Image.asset("assets/images/Frame 10.png"),
                                 width: 18,
                                 height: 18,
                               ),
@@ -407,7 +428,6 @@ class _DonutPageState extends State<DonutPage> {
                     ))
               ],
             )
-
           ],
         ),
       ),
