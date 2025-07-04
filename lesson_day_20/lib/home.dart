@@ -50,12 +50,14 @@ class _HomeState extends State<Home> {
       'icon': Icons.elevator,
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: Text("Mongolian Cities"),
-        centerTitle: true,
+        centerTitle: false,
       ),
       body: ListView.builder(
           itemCount: _items.length,
