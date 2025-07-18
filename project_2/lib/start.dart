@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_2/home.dart';
+import 'package:project_2/home_page.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -88,7 +88,10 @@ class _StartPageState extends State<StartPage> {
                         )
                       ]),
                   child: TextButton(
-                      onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));},
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Home()));
+                      },
                       child: Text(
                         "Get Started",
                         style: TextStyle(

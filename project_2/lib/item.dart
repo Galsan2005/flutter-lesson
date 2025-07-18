@@ -1,16 +1,72 @@
 import 'package:flutter/material.dart';
 
-class ItemPage extends StatelessWidget {
+class ItemPage extends StatefulWidget {
   final String pizzaName;
   final String calories;
   final String image;
-  final String price;
+  final List<double> prices;
+
   const ItemPage(
       {required this.pizzaName,
       required this.calories,
       required this.image,
-      required this.price,
+
+        required this.prices,
       super.key});
+
+  @override
+  State<ItemPage> createState() => _ItemPageState();
+}
+
+class _ItemPageState extends State<ItemPage> {
+  int count = 1;
+  double cost = 0;
+  double rounded = 0;
+  int selectedIndex = 1;
+  double abs = 0;
+  double a = 0;
+  // final List<double> prices = [6.44, 9.47, 15.32];
+  // final List<double> prices1 = [9.55, 12.55, 18.43];
+  final List<String> sizes = ["8 inch", "12 inch", "16 inch"];
+  final List<String> measures = ["180", "220", "270"];
+
+
+  void _counterPlus() {
+    setState(() {
+      count++;
+      // cost = cost * count;
+      rounded = double.parse((cost * count).toStringAsFixed(2));
+      abs = cost ;
+    });
+  }
+
+  void _convert(price, measure) {
+    setState(() {
+      a = double.parse(measure);
+      cost = price;
+      count = 1;
+      rounded = price * count;
+      abs = cost;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cost = widget.prices[1];
+    rounded = widget.prices[1];
+    abs = cost;
+    a = 200;
+  }
+
+  void _counterMinus() {
+    setState(() {
+      if (count > 0) {
+        count--;
+        rounded = double.parse((cost * count).toStringAsFixed(2));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +111,7 @@ class ItemPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                pizzaName,
+                widget.pizzaName,
                 style: TextStyle(
                     fontFamily: "Inter",
                     fontSize: 21,
@@ -72,7 +128,7 @@ class ItemPage extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: price,
+                      text: ' ${abs} ',
                       style: TextStyle(
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w500,
@@ -84,8 +140,8 @@ class ItemPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 53),
                 child: Container(
-                  width: 272,
-                  height: 268,
+                  width: a,
+                  height: a,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(388),
                       boxShadow: [
@@ -95,7 +151,7 @@ class ItemPage extends StatelessWidget {
                             blurRadius: 50)
                       ]),
                   child: Image.asset(
-                    image,
+                    widget.image,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -115,16 +171,20 @@ class ItemPage extends StatelessWidget {
                               offset: Offset(0, 2),
                               blurRadius: 5)
                         ]),
-                    child: Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                      size: 22,
+                    child: IconButton(
+                      onPressed: _counterMinus,
+                      icon: Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: Text(
-                      "2",
+                      "${count}",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -144,10 +204,14 @@ class ItemPage extends StatelessWidget {
                               offset: Offset(0, 2),
                               blurRadius: 5)
                         ]),
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 22,
+                    child: IconButton(
+                      onPressed: _counterPlus,
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ],
@@ -155,7 +219,7 @@ class ItemPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Text(
-                  "\$19.34",
+                  "\$ ${rounded}",
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
@@ -167,102 +231,69 @@ class ItemPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 60),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: 23,
-                          height: 23,
-                          decoration: BoxDecoration(
+                  children: List.generate(widget.prices.length, (index) {
+                    final bool isSelected = index == selectedIndex;
+                    // int index = selectedIndex;
+                    double price = widget.prices[index];
+                    String size = sizes[index];
+                    String measure = measures[index];
+
+                    // _counterPlus(price);
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                          _convert(price, measure);
+                        });
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 23,
+                            height: 23,
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(23),
-                              // color: Colors.white,
-                              border: Border.all(color: Color(0xffBDBDBD))),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 6)),
-                        Text(
-                          "\$6.44",
-                          style: TextStyle(
-                              fontFamily: "Inter",
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xffBDBDBD)),
-                        ),
-                        Text(
-                          "8 inch",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14,
-                              fontFamily: "Inter"),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: 23,
-                          height: 23,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(23),
-                              // color: Colors.white,
-                              border: Border.all(color: Color(0xffF68989))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(1.5),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Color(0xfff68989))),
+                              border: Border.all(
+                                color: isSelected
+                                    ? Color(0xffF68989)
+                                    : Color(0xffBDBDBD),
+                              ),
+                            ),
+                            child: isSelected
+                                ? Padding(
+                                    padding: const EdgeInsets.all(1.5),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Color(0xffF68989),
+                                      ),
+                                    ),
+                                  )
+                                : null,
                           ),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 6)),
-                        Text(
-                          "\$9.47",
-                          style: TextStyle(
+                          SizedBox(height: 6),
+                          Text(
+                            "\$${widget.prices[index].toStringAsFixed(2)}",
+                            style: TextStyle(
                               fontFamily: "Inter",
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xffBDBDBD)),
-                        ),
-                        Text(
-                          "12 inch",
-                          style: TextStyle(
+                              color: Color(0xffBDBDBD),
+                            ),
+                          ),
+                          Text(
+                            sizes[index],
+                            style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w300,
                               fontSize: 14,
-                              fontFamily: "Inter"),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          width: 23,
-                          height: 23,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(23),
-                              // color: Colors.white,
-                              border: Border.all(color: Color(0xffBDBDBD))),
-                        ),
-                        Padding(padding: EdgeInsets.only(top: 6)),
-                        Text(
-                          "\$15.32",
-                          style: TextStyle(
                               fontFamily: "Inter",
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xffBDBDBD)),
-                        ),
-                        Text(
-                          "16 inch",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14,
-                              fontFamily: "Inter"),
-                        ),
-                      ],
-                    )
-                  ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               ),
               Padding(
@@ -280,7 +311,7 @@ class ItemPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "4.9",
+                          '4.9',
                           style: TextStyle(
                             fontFamily: "Inter",
                             fontSize: 16,
@@ -299,7 +330,7 @@ class ItemPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          calories,
+                          widget.calories,
                           style: TextStyle(
                             fontFamily: "Inter",
                             fontSize: 16,

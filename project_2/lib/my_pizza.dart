@@ -1,23 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:project_2/item.dart';
 
-class MyPizza extends StatelessWidget {
+class MyPizza extends StatefulWidget {
   final String pizzaName;
   final String calories;
   final String image;
-  final String price;
+  final List<double> prices;
+
   const MyPizza(
       {required this.pizzaName,
       required this.calories,
       required this.image,
-      required this.price,
+        required this.prices,
       super.key});
+
+  @override
+  State<MyPizza> createState() => _MyPizzaState();
+}
+
+class _MyPizzaState extends State<MyPizza> {
+  // int count = 0;
+  //
+  // void _counter(){
+  //   setState(() {
+  //     count ++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
-      onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ItemPage(pizzaName: pizzaName, calories: calories, image: image, price: price)));},
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ItemPage(
+                      pizzaName: widget.pizzaName,
+                      calories: widget.calories,
+                      image: widget.image,
+                      prices: widget.prices,
+                    )));
+      },
       child: Container(
         width: 162,
         height: 272,
@@ -35,7 +59,7 @@ class MyPizza extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                pizzaName,
+                widget.pizzaName,
                 style: TextStyle(
                     fontFamily: "Inter",
                     fontSize: 14,
@@ -53,7 +77,7 @@ class MyPizza extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(left: 7)),
                   Text(
-                    calories,
+                    widget.calories,
                     style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
@@ -66,7 +90,7 @@ class MyPizza extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10),
                 width: 145,
                 height: 142,
-                child: Image.asset(image),
+                child: Image.asset(widget.image),
               ),
               Padding(padding: EdgeInsets.only(top: 10)),
               Text.rich(
@@ -79,7 +103,7 @@ class MyPizza extends StatelessWidget {
                         color: Color(0xffEB5757)),
                     children: [
                       TextSpan(
-                          text: price,
+                          text: '${widget.prices[1]}',
                           style: TextStyle(
                               fontSize: 16,
                               fontFamily: "Inter",
