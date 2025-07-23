@@ -26,48 +26,57 @@ class PetProfile {
 }
 
 class _HomePageState extends State<HomePage> {
-
   String selectedFilter = "all";
 
   List<PetProfile> allPets = [
-    PetProfile(name: "Harry",
-        origin: "Yorkshire Terrier",
-        age: "3 years",
-        img: "assets/images/66b6e2c0f0dadb6c1b67d078f61b9dcb20cf7f76.png",
-        type: "dog"),
-    PetProfile(name: "Mark",
-        origin: "British",
-        age: "2 month",
-        img: "assets/images/d05ec49e4d0c491f54117739c2c3c68d9e4dc046.png",
-        type: "cat"),
-    PetProfile(name: "Henry",
-        origin: "Mestizo",
-        age: "3 years",
-        img: "assets/images/76a9645d0721c39bf82461798397faec5b87c0d2.png",
-        type: "cat"),
-    PetProfile(name: "Lopy",
-        origin: "Yorkshire Terrier",
-        age: "3 years",
-        img: "assets/images/f69ff454a650f7fcd5ecc4dcb92baf1e25a9ce54.png",
-        type: "dog"),
-    PetProfile(name: "Jennie",
-        origin: "Yorkshire Terrier",
-        age: "3 years",
-        img: "assets/images/4d2e40727f9cc48bfa1763ff435aef117482bde1.png",
-        type: "dog"),
-    PetProfile(name: "Cris",
-        origin: "Mestizo",
-        age: "3 years",
-        img: "assets/images/7e50dce166fdf4f4c1b2326a232130d88c3fae73.png",
-        type: "dog"),
-
+    PetProfile(
+      name: "Harry",
+      origin: "Yorkshire Terrier",
+      age: "3 years",
+      img: "assets/images/66b6e2c0f0dadb6c1b67d078f61b9dcb20cf7f76.png",
+      type: "dog",
+    ),
+    PetProfile(
+      name: "Mark",
+      origin: "British",
+      age: "2 month",
+      img: "assets/images/d05ec49e4d0c491f54117739c2c3c68d9e4dc046.png",
+      type: "cat",
+    ),
+    PetProfile(
+      name: "Henry",
+      origin: "Mestizo",
+      age: "3 years",
+      img: "assets/images/76a9645d0721c39bf82461798397faec5b87c0d2.png",
+      type: "cat",
+    ),
+    PetProfile(
+      name: "Lopy",
+      origin: "Yorkshire Terrier",
+      age: "3 years",
+      img: "assets/images/f69ff454a650f7fcd5ecc4dcb92baf1e25a9ce54.png",
+      type: "dog",
+    ),
+    PetProfile(
+      name: "Jennie",
+      origin: "Yorkshire Terrier",
+      age: "3 years",
+      img: "assets/images/4d2e40727f9cc48bfa1763ff435aef117482bde1.png",
+      type: "dog",
+    ),
+    PetProfile(
+      name: "Cris",
+      origin: "Mestizo",
+      age: "3 years",
+      img: "assets/images/7e50dce166fdf4f4c1b2326a232130d88c3fae73.png",
+      type: "dog",
+    ),
   ];
 
   List<PetProfile> get filteredPets {
-    if(selectedFilter == "all") return allPets;
+    if (selectedFilter == "all") return allPets;
     return allPets.where((pet) => pet.type == selectedFilter).toList();
   }
-
 
   @override
   // Widget build(BuildContext context) {
@@ -315,8 +324,8 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FilterButton("all", "Бүгд"),
-              FilterButton("dog", "Нохой"),
+              FilterButton("all", "Бүгд", "assets/images/6edb41af2f4c9e50e6a6ad654b396e751c50090d.png"),
+              FilterButton("dog", "Нохой", "assets/images/da6153a5f504d32b6652db07ecf1d0f90fb6c020.png"),
               FilterButton("cat", "Муур"),
             ],
           ),
@@ -330,9 +339,7 @@ class _HomePageState extends State<HomePage> {
                 final pet = filteredPets[index];
                 return Card(
                   child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(pet.img),
-                    ),
+                    leading: CircleAvatar(backgroundImage: AssetImage(pet.img)),
                     title: Text(pet.name),
                     subtitle: Text(pet.type == "dog" ? "Нохой" : "Муур"),
                   ),
@@ -345,22 +352,62 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   Widget FilterButton(String filter, String label) {
     final isSelected = selectedFilter == filter;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
-      child:   ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isSelected ? Colors.blue : Colors.grey[300],
-          foregroundColor: isSelected ? Colors.white : Colors.black,
+      // padding: EdgeInsets.only(right: 0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+        // style: ElevatedButton.styleFrom(
+        // backgroundColor: isSelected ? Color(0xffFBD1C4) : null,
+        // foregroundColor: isSelected ? Colors.white : Colors.black,
+        // ),
+        onPressed: () {
+          setState(() {
+            selectedFilter = filter;
+          });
+        },
+        child: Container(
+          width: 100,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: Color(0xffFBD1C4),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/6edb41af2f4c9e50e6a6ad654b396e751c50090d.png",
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
-        onPressed: () {setState(() {
-          selectedFilter = filter;
-        });},
-        child: Text(label),
       ),
 
+      // child: Text(label),
     );
   }
 }
