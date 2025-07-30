@@ -177,7 +177,17 @@ class _HomePageState extends State<HomePage> {
               itemCount: filteredPets.length,
               itemBuilder: (context, index) {
                 final pet = filteredPets[index];
-                return RawMaterialButton(
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Colors.transparent,
+                    // 🚫 Background арилгана
+                    shadowColor: Colors.transparent,
+                    // 🚫 Сүүдэр арилгана
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
