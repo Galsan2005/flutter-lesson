@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:project_4/home_page.dart';
 
 class PlanetDetailPage extends StatefulWidget {
-  const PlanetDetailPage({super.key});
+  final String name;
+  final String img;
+  final PlanetProfile planet;
+  final List<PlanetProfile> allPlanets;
+
+
+  const PlanetDetailPage({super.key,required this.planet, required this.allPlanets, required this.name, required this.img});
 
   @override
   State<PlanetDetailPage> createState() => _PlanetDetailPageState();
 }
 
 class _PlanetDetailPageState extends State<PlanetDetailPage> {
+  bool showLikedOnly = false;
+
+  List<PlanetProfile> get LikedPlanets {
+    if (showLikedOnly) {
+      return widget.allPlanets.where((planet) => planet.like).toList();
+    }
+    return widget.allPlanets;
+  }
+
+  void _liked(PlanetProfile planet) {
+    setState(() {
+      planet.like = !planet.like;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
-
             // Background
             Container(
               width: double.infinity,
@@ -54,118 +75,116 @@ class _PlanetDetailPageState extends State<PlanetDetailPage> {
 
             // Main content
             SafeArea(
-              child:
-                  Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Top Bar
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 30,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Top Bar
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 30,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            child:IconButton(
+                              onPressed: (){Navigator.pop(context);},
+                              icon: Icon(Icons.arrow_back, color: Colors.white),
+                            ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.1),
+                          ),
+                          child:IconButton(
+                            onPressed: (){
+                              _liked(widget.planet);
+                            },
+                            icon: Icon(widget.planet.like ? Icons.favorite : Icons.favorite_border,
+                                color: widget.planet.like ? Colors.yellow : Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 170),
+
+                  // Planet Name
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(21),
+                      width: double.infinity,
+                      // height: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 80),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.1),
-                              ),
-                              padding: EdgeInsets.all(10),
-                              child: Icon(
-                                Icons.arrow_back,
+                            Text(
+                              widget.name,
+                              style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 32,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.1),
-                              ),
-                              padding: EdgeInsets.all(10),
-                              child: Icon(
-                                Icons.favorite_border,
-                                color: Colors.white,
+
+                            // Stats
+                            _buildStats(),
+
+                            // Visit Button
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 40,
+                                    vertical: 14,
+                                  ),
+                                  shape: StadiumBorder(),
+                                  backgroundColor: Colors.blueAccent,
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  'Visit',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 170,
-                      ),
-
-                      // Planet Name
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(21),
-                          width: double.infinity,
-                          // height: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(28),
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 80),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  'Earth',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-
-                                // Stats
-                                _buildStats(),
-
-                                // Visit Button
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 20.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 40,
-                                        vertical: 14,
-                                      ),
-                                      shape: StadiumBorder(),
-                                      backgroundColor: Colors.blueAccent,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Visit',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                ],
+              ),
             ),
             Positioned(
               top: 200,
               // left: 100,
-              left: (MediaQuery.of(context).size.width - 200) / 2,
+              left: (MediaQuery.of(context).size.width - 260) / 2,
               child: Container(
-                width: 200,
+                width: 260,
                 height: 150,
                 decoration: BoxDecoration(
                   // color: Colors.white,
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage("assets/images/planet.jpg"),
+                    image: AssetImage(widget.img),
                     fit: BoxFit.cover,
                     alignment: Alignment(0, 0),
                   ),
@@ -181,33 +200,33 @@ class _PlanetDetailPageState extends State<PlanetDetailPage> {
   Widget _buildStats() {
     return Container(
       height: 270,
-      child:  Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildStatItem(Icons.fitness_center, 'Mass\n(10²⁴kg)', '5.97'),
-                _buildStatItem(Icons.attach_file, 'Gravity\n(m/s²)', '9.8'),
-                _buildStatItem(Icons.wb_sunny, 'Day\n(hours)', '24'),
-              ],
-            ),
-            SizedBox(height: 32,),
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildStatItem(Icons.fitness_center, 'Mass\n(10²⁴kg)', '5.97'),
+              _buildStatItem(Icons.attach_file, 'Gravity\n(m/s²)', '9.8'),
+              _buildStatItem(Icons.wb_sunny, 'Day\n(hours)', '24'),
+            ],
+          ),
+          SizedBox(height: 32),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildStatItem(
-                  Icons.rocket_launch,
-                  'Esc. Velocity\n(km/s)',
-                  '11.2',
-                ),
-                _buildStatItem(Icons.thermostat, 'Mean Temp\n(C)', '15'),
-                _buildStatItem(Icons.straighten, 'Distance\nfrom Sun', '5.97'),
-              ],
-            ),
-          ],
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildStatItem(
+                Icons.rocket_launch,
+                'Esc. Velocity\n(km/s)',
+                '11.2',
+              ),
+              _buildStatItem(Icons.thermostat, 'Mean Temp\n(C)', '15'),
+              _buildStatItem(Icons.straighten, 'Distance\nfrom Sun', '5.97'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

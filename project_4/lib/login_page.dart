@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white, // ✳️ Текстийн өнгө
                             fontSize: 16, // Фонтын хэмжээ (заавал биш)
                             fontWeight:
-                            FontWeight.w700, // Фонтын жин (заавал биш)
+                                FontWeight.w700, // Фонтын жин (заавал биш)
                           ),
                           decoration: InputDecoration(
                             labelText: 'Password',
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Нэрээ оруулна уу';
+                              return 'Password оруулна уу';
                             }
                             return null;
                           },
@@ -174,7 +174,12 @@ class _LoginPageState extends State<LoginPage> {
                                   content: Text('Амжилттай илгээгдлээ!'),
                                 ),
                               );
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
                             }
                           },
                           child: Container(

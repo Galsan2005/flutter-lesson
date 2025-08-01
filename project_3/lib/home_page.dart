@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
             height: 50,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              // color: Color(0xffFBD1C4),
+              //color: Color(0xffFBD1C4),
             ),
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,

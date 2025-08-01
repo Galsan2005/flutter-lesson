@@ -23,8 +23,16 @@ class StartPage extends StatelessWidget {
             children: [
               // SizedBox(height: 40), // space from top
               ElevatedButton(
-                onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));},
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.zero, backgroundColor: Colors.white.withOpacity(0.05)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  backgroundColor: Colors.white.withOpacity(0.05),
+                ),
                 child: Container(
                   height: 300,
                   width: 320,
@@ -35,25 +43,21 @@ class StartPage extends StatelessWidget {
                     ),
                   ),
                   child: Center(
-                    child: Image.asset(
-                      "assets/images/logo.png",
-                      height: 100,
-                    ),
+                    child: Image.asset("assets/images/logo.png", height: 100),
                   ),
                 ),
               ),
-              SizedBox(height: 100,),
+              SizedBox(height: 100),
               Container(
                 child: Image.asset(
                   "assets/images/flutter_logo.png",
                   height: 200,
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }
