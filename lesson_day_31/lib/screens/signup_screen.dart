@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lesson_day_31/screens/login_page.dart';
 
@@ -12,20 +13,46 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool _isLoading = false;
 
   bool _obscureText = true;
   bool _obscureText1 = true;
 
-
-  void signup(){
-    if(_formKey.currentState!.validate()){
-      print("Email: ${_emailController.text}");
-      print("Password: ${_passwordController.text}");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Signing up..."))
-      );
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+  Future<void> signup() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      try {
+        await _auth.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Burtgel amjilttai. Odoo nevterne uu")),
+        );
+      } on FirebaseAuthException catch (error) {
+        String message = "Burtgel amjiltgui bolloo.";
+        if (error.code == "weak-password") {
+          message = "Nuuts ug sul bna";
+        } else if (error.code == "email-already-in-use") {
+          message = "Ene email burtgeltei bna";
+        } else if (error.code == "invalid-email") {
+          message = "Email hayg buruu formattai bna";
+        }
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      }
+      finally{
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -66,11 +93,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     labelText: "Password",
                     border: OutlineInputBorder(),
                     prefix: Icon(Icons.lock),
-                    suffixIcon: IconButton(onPressed: (){
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    }, icon: _obscureText ? Icon(Icons.visibility_off) : Icon(Icons.visibility))
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      icon: _obscureText
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -90,11 +122,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     labelText: "Confirm Password",
                     border: OutlineInputBorder(),
                     prefix: Icon(Icons.lock),
-                      suffixIcon: IconButton(onPressed: (){
+                    suffixIcon: IconButton(
+                      onPressed: () {
                         setState(() {
                           _obscureText1 = !_obscureText1;
                         });
-                      }, icon: _obscureText1 ? Icon(Icons.visibility_off) : Icon(Icons.visibility))
+                      },
+                      icon: _obscureText1
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -107,20 +144,29 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(onPressed: () {
-                  signup();
-
-
-                }, child: Text("Sign up"),style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ))),
-                SizedBox(height: 20,),
-                TextButton(onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
-                }, child: Text(
-                  "Have you already signed up?, Log in"
-                )),
+                ElevatedButton(
+                  onPressed: () {
+                    signup();
+                  },
+                  child: Text("Sign up"),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                _isLoading ? CircularProgressIndicator() :
+                SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  child: Text("Have you already signed up?, Log in"),
+                ),
               ],
             ),
           ),
